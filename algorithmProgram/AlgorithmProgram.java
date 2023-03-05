@@ -1,89 +1,39 @@
 package algorithmProgram;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
+import java.util.Scanner;
 
 public class AlgorithmProgram {
-    boolean isPrime(int n) {
 
-        int c = 0;
 
-        for (int i = 1; i <= n; i++) {
+    public static void main(String args[]) {
+        Scanner scanner = new Scanner(System.in);
+        int number, temperory, remainder, i;
+        int count = 0;
+        int sum = 0;
 
-            if (n % i == 0)
+        System.out.println("Enter number to check");
+        number = scanner.nextInt();
 
-                c++;
+        temperory = number;
 
+        //use for loop check whether number is prime or not
+        for (i = 1; i <= temperory; i++) {
+            if (temperory % i == 0) {
+
+                count++;
+            }
+        }
+        while (number > 0) {
+            remainder = number % 10;
+            sum = sum * 10 + remainder;
+            number = number / 10;
         }
 
-        if (c == 2)
-
-            return true;
-
-        else
-
-            return false;
-
+        //check whether the number is palindrome and Prime or not
+        if (temperory == sum && count == 2) {
+            System.out.println(temperory + " is a PalPrime number");
+        } else {
+            System.out.println(temperory + " is not a PalPrime number");
+        }
     }
-
-    public static void main(String args[]) throws IOException {
-        AlgorithmProgram ob = new AlgorithmProgram();
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        System.out.print("Enter the number of rows : ");
-
-        int m = Integer.parseInt(br.readLine());
-
-        System.out.print("Enter the number of columns : ");
-
-        int n = Integer.parseInt(br.readLine());
-        int A[][] = new int[m][n];
-        int B[] = new int[m * n];
-        int i = 0, j;
-        int k = 1;
-
-
-        while (i < m * n) {
-
-            if (ob.isPrime(k) == true) {
-
-                B[i] = k;
-
-                i++;
-
-            }
-
-            k++;
-
-        }
-        int x = 0;
-
-        for (i = 0; i < m; i++) {
-
-            for (j = 0; j < n; j++) {
-
-                A[i][j] = B[x];
-
-                x++;
-
-            }
-
-        }
-        System.out.println("The Final Array is : ");
-
-        for (i = 0; i < m; i++) {
-
-            for (j = 0; j < n; j++) {
-
-                System.out.print(A[i][j] + "\t");
-
-            }
-
-            System.out.println();
-
-        }
-
-    }
-
 }
