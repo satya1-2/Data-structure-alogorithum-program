@@ -2,33 +2,79 @@ package algorithmProgram;
 
 public class AlgorithmProgram {
 
-    public void performBubbleSort(int[] array) {
-        int number = array.length;
-        for (int i = 0; i < number; i++) {
-            for (int j = 0; j < j - i - 1; j++) {
-                if (array[j] >= array[j + 1]) {
-                    int temp = array[j];
-                    array[j] = array[j + 1];
-                    temp = array[j + 1];
-                }
+    void mergeSort(int arr[], int l, int m, int r) {
+        // Find sizes of two subArrays to be merged
+        int n1 = m - l + 1;
+        int n2 = r - m;
 
+        /* Create temp arrays */
+        int Left[] = new int[n1];
+        int Right[] = new int[n2];
+
+        for (int i = 0; i < n1; ++i)
+            Left[i] = arr[l + i];
+        for (int j = 0; j < n2; ++j)
+            Right[j] = arr[m + 1 + j];
+
+        // Initial indexes of first and second subArrays
+        int i = 0, j = 0;
+
+        int k = l;
+        while (i < n1 && j < n2) {
+            if (Left[i] <= Right[j]) {
+                arr[k] = Left[i];
+                i++;
+            } else {
+                arr[k] = Right[j];
+                j++;
             }
-            for (int k = 0; k < array.length; k++) {
-                System.out.print(array[k] + " ");
-            }
-            System.out.println();
+            k++;
+        }
+        while (i < n1) {
+            arr[k] = Left[i];
+            i++;
+            k++;
         }
 
+        while (j < n2) {
+            arr[k] = Right[j];
+            j++;
+            k++;
+        }
     }
 
-    public static void main(String[] args) {
+    void sort(int array[], int l, int r) {
+        if (l < r) {
+            // Find the middle point
+            int m = l + (r - l) / 2;
 
-        AlgorithmProgram bubble = new AlgorithmProgram();
-        int[] array = {12, 23, 34, 55, 6, 7, 78, 98};
-        bubble.performBubbleSort(array);
-        for (int i = 0; i < array.length; i++) {
+            // Sort first and second halves
+            sort(array, l, m);
+            sort(array, m + 1, r);
 
-            System.out.print(array[i] + "  ");
+            // Merge the sorted halves
+            mergeSort(array, l, m, r);
         }
+    }
+
+    static void printArray(int array[]) {
+        int n = array.length;
+        for (int i = 0; i < n; ++i)
+            System.out.print(array[i] + " ");
+        System.out.println();
+    }
+
+    public static void main(String args[]) {
+        int array[] = {12, 11, 13, 5, 6, 7, 23, 45, 46};
+
+        System.out.println("Given Array");
+        printArray(array);
+
+        AlgorithmProgram ob = new AlgorithmProgram();
+        ob.sort(array, 0, array.length - 1);
+
+        System.out.println("\nSorted array");
+        printArray(array);
     }
 }
+
