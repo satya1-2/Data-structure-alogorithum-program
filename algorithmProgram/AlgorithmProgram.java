@@ -1,39 +1,52 @@
 package algorithmProgram;
 
-import java.util.Scanner;
+import java.util.*;
 
 public class AlgorithmProgram {
 
+    static void executeProcesses(int A[], int N, int K) {
+        // Stores all the array elements
+        PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
 
-    public static void main(String args[]) {
-        Scanner scanner = new Scanner(System.in);
-        int number, temperory, remainder, i;
-        int count = 0;
-        int sum = 0;
-
-        System.out.println("Enter number to check");
-        number = scanner.nextInt();
-
-        temperory = number;
-
-        //use for loop check whether number is prime or not
-        for (i = 1; i <= temperory; i++) {
-            if (temperory % i == 0) {
-
-                count++;
-            }
-        }
-        while (number > 0) {
-            remainder = number % 10;
-            sum = sum * 10 + remainder;
-            number = number / 10;
+        // Push all the elements to the
+        // priority queue
+        for (int i = 0; i < N; i++) {
+            pq.add(A[i]);
         }
 
-        //check whether the number is palindrome and Prime or not
-        if (temperory == sum && count == 2) {
-            System.out.println(temperory + " is a PalPrime number");
-        } else {
-            System.out.println(temperory + " is not a PalPrime number");
+        // Stores the required result
+        int ans = 0;
+
+        // Loop while the queue is not
+        // empty and K is positive
+        while (!pq.isEmpty() && K > 0) {
+
+            // Store the top element
+            // from the pq
+            int top = pq.poll();
+
+
+            // Add it to the answer
+            ans++;
+
+            // Divide it by 2 and push it
+            // back to the pq
+            K = K - top;
+            top = top >> 1;
+            pq.add(top);
         }
+
+        // Print the answer
+        System.out.println(ans);
+    }
+
+    public static void main(String[] args) {
+
+        int A[] = {3, 1, 7, 4, 2};
+        int K = 15;
+        int N = A.length;
+        executeProcesses(A, N, K);
+
     }
 }
+
